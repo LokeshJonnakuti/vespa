@@ -426,7 +426,9 @@ public class KStemmer {
         word.setLength(j + 3);
         k--;
         if (lookup()) /* ensure calories -> calorie */
-        return;
+        {
+            return;
+        }
         k++;
         word.unsafeWrite('s');
         setSuffix("y");
@@ -515,7 +517,9 @@ public class KStemmer {
       word.setLength(j + 3);
       k--;
       if (lookup()) /* we almost always want to convert -ied to -y, but */
-      return; /* this isn't true for short words (died->die) */
+      {
+          return;
+      } /* this isn't true for short words (died->die) */
       k++; /* I don't know any long words that this applies to, */
       word.unsafeWrite('d'); /* but just in case... */
       setSuffix("y");
@@ -953,7 +957,9 @@ public class KStemmer {
                      * remove -ition and add `e', and check against the
                      * dictionary
                      */
-      return; /* (e.g., definition->define, opposition->oppose) */
+      {
+          return;
+      } /* (e.g., definition->define, opposition->oppose) */
       
       /* restore original values */
       word.setLength(j + 1);
@@ -965,7 +971,9 @@ public class KStemmer {
       word.unsafeWrite('e');
       k = j + 3;
       if (lookup()) /* remove -ion and add `e', and check against the dictionary */
-      return; /* (elmination -> eliminate) */
+      {
+          return;
+      } /* (elmination -> eliminate) */
       
       word.setLength(j + 1);
       word.unsafeWrite('e'); /*
@@ -1003,7 +1011,9 @@ public class KStemmer {
                      * remove -ication and add `y', and check against the
                      * dictionary
                      */
-      return; /* (e.g., amplification -> amplify) */
+      {
+          return;
+      } /* (e.g., amplification -> amplify) */
       
       /* restore original values */
       word.setLength(j + 1);
@@ -1020,12 +1030,16 @@ public class KStemmer {
       word.unsafeWrite('e');
       k = j + 1;
       if (lookup()) /* remove -ion and add `e', and check against the dictionary */
-      return;
+      {
+          return;
+      }
       
       word.setLength(j + 1);
       k = j;
       if (lookup()) /* remove -ion, and if it's found, treat that as the root */
-      return;
+      {
+          return;
+      }
       
       /* restore original values */
       word.setLength(j + 1);
@@ -1073,7 +1087,9 @@ public class KStemmer {
         word.setLength(j + 1);
         k = j;
         if (lookup()) /* yes, so check against the dictionary */
-        return;
+        {
+            return;
+        }
         word.setCharAt(j, 'i'); /* restore the endings */
         word.unsafeWrite('e');
       }
@@ -1133,7 +1149,9 @@ public class KStemmer {
                                                                               * -
                                                                               * al
                                                                               */
-      return;
+      {
+          return;
+      }
       word.append("ly");
       k = old_k;
       
@@ -1173,7 +1191,9 @@ public class KStemmer {
       word.setLength(j + 1);
       k = j;
       if (lookup()) /* try just removing the -al */
-      return;
+      {
+          return;
+      }
       
       if (doubleC(j)) { /* allow for a doubled consonant */
         word.setLength(j);
