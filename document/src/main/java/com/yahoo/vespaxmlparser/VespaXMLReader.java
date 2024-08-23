@@ -3,6 +3,7 @@ package com.yahoo.vespaxmlparser;
 
 import com.yahoo.document.DocumentTypeManager;
 import com.yahoo.document.serialization.DeserializationException;
+import static io.github.pixee.security.XMLInputFactorySecurity.hardenFactory;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -23,7 +24,7 @@ public class VespaXMLReader {
 
     public VespaXMLReader(InputStream stream, DocumentTypeManager docTypeManager) throws Exception {
         this.docTypeManager = docTypeManager;
-        XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
+        XMLInputFactory xmlInputFactory = hardenFactory(XMLInputFactory.newInstance());
         xmlInputFactory.setProperty("javax.xml.stream.isSupportingExternalEntities", Boolean.FALSE);
         reader = xmlInputFactory.createXMLStreamReader(stream);
     }
