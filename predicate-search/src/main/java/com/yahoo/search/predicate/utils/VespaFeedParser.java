@@ -2,6 +2,7 @@
 package com.yahoo.search.predicate.utils;
 
 import com.yahoo.document.predicate.Predicate;
+import io.github.pixee.security.BoundedLineReader;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -21,7 +22,7 @@ public class VespaFeedParser {
     public static int parseDocuments(String feedFile, int maxDocuments, Consumer<Predicate> consumer) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(feedFile), 8 * 1024)) {
             reader.mark(1);
-            String line = reader.readLine();
+            String line = BoundedLineReader.readLine(reader, 5_000_000);
             boolean xmlFeed = line.startsWith("<");
             reader.reset();
             return xmlFeed
@@ -32,10 +33,10 @@ public class VespaFeedParser {
 
     public static int parseJsonFeedFile(BufferedReader reader, int maxDocuments, Consumer<Predicate> consumer) throws IOException {
         int documentCount = 0;
-        String line = reader.readLine();
+        String line = BoundedLineReader.readLine(reader, 5_000_000);
         while (! line.startsWith("]") && documentCount < maxDocuments) {
             while (! line.contains("\"boolean\":")) {
-                line = reader.readLine();
+                line = BoundedLineReader.readLine(reader, 5_000_000);
             }
             String booleanExpression = extractBooleanExpression(line);
             try {
@@ -45,25 +46,25 @@ public class VespaFeedParser {
             } catch (IllegalArgumentException e) {
                 throw new IllegalArgumentException("Failed to parse predicate: " + booleanExpression, e);
             }
-            line = reader.readLine();
+            line = BoundedLineReader.readLine(reader, 5_000_000);
         }
         return documentCount;
     }
 
     public static int parseXmlFeedFile(BufferedReader reader, int maxDocuments, Consumer<Predicate> consumer) throws IOException {
         int documentCount = 0;
-        reader.readLine();
-        String line = reader.readLine(); // Skip to start of first document
+        BoundedLineReader.readLine(reader, 5_000_000);
+        String line = BoundedLineReader.readLine(reader, 5_000_000); // Skip to start of first document
         while (! line.startsWith("</vespafeed>") && documentCount < maxDocuments) {
             while (!line.startsWith("<boolean>")) {
-                line = reader.readLine();
+                line = BoundedLineReader.readLine(reader, 5_000_000);
             }
             Predicate predicate = Predicate.fromString(extractBooleanExpressionXml(line)); consumer.accept(predicate);
             ++ documentCount;
             while (! line.startsWith("<document") && ! line.startsWith("</vespafeed>")) {
-                line = reader.readLine();
+                line = BoundedLineReader.readLine(reader, 5_000_000);
             }
-            line = reader.readLine();
+            line = BoundedLineReader.readLine(reader, 5_000_000);
             if (line == null) break;
         }
         return documentCount;

@@ -1,6 +1,7 @@
 // Copyright Vespa.ai. Licensed under the terms of the Apache 2.0 license. See LICENSE in the project root.
 package com.yahoo.prelude.query.textualrepresentation.test;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.nio.ByteBuffer;
@@ -118,7 +119,7 @@ public class TextualQueryRepresentationTestCase {
         BufferedReader reader = new BufferedReader(new FileReader(
                 "src/test/java/com/yahoo/prelude/query/textualrepresentation/test/" + filename));
         StringBuilder result = new StringBuilder();
-        for (String line; (line = reader.readLine()) != null;)
+        for (String line; (line = BoundedLineReader.readLine(reader, 5_000_000)) != null;)
             result.append(line).append('\n');
         return result.toString();
     }

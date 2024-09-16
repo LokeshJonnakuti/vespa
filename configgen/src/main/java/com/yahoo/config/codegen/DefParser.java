@@ -1,6 +1,7 @@
 // Copyright Vespa.ai. Licensed under the terms of the Apache 2.0 license. See LICENSE in the project root.
 package com.yahoo.config.codegen;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -96,7 +97,7 @@ public class DefParser {
 
         String s;
         List<String> originalInput = new ArrayList<>();
-        while ((s = reader.readLine()) != null) {
+        while ((s = BoundedLineReader.readLine(reader, 5_000_000)) != null) {
             originalInput.add(s);
         }
         reader.close();

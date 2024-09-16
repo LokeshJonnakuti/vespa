@@ -27,6 +27,7 @@ import com.yahoo.language.significance.impl.SignificanceModelFile;
 import com.yahoo.text.Utf8;
 import io.airlift.compress.zstd.ZstdInputStream;
 import io.airlift.compress.zstd.ZstdOutputStream;
+import io.github.pixee.security.BoundedLineReader;
 
 import java.io.IOException;
 import java.io.BufferedReader;
@@ -111,7 +112,7 @@ public class SignificanceModelGenerator {
 
         long i = 1;
         while (reader.ready()) {
-            String line = reader.readLine();
+            String line = BoundedLineReader.readLine(reader, 5_000_000);
             JsonReader jsonReader = new JsonReader(types, new ByteArrayInputStream(Utf8.toBytes(line)), parserFactory);
             String wikimediaId = "id:wikimedia:" + languageTag.languageCode() + "::" + i;
 

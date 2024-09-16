@@ -2,6 +2,7 @@
 package com.yahoo.jdisc.handler;
 
 import com.yahoo.text.Utf8;
+import io.github.pixee.security.BoundedLineReader;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
@@ -30,8 +31,8 @@ public class UnsafeContentInputStreamTestCase {
         writer.close();
 
         BufferedReader reader = asBufferedReader(channel);
-        assertEquals("Hello World!", reader.readLine());
-        assertNull(reader.readLine());
+        assertEquals("Hello World!", BoundedLineReader.readLine(reader, 5_000_000));
+        assertNull(BoundedLineReader.readLine(reader, 5_000_000));
     }
 
     @Test

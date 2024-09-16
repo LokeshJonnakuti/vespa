@@ -20,6 +20,7 @@ import com.yahoo.slime.BinaryFormat;
 import com.yahoo.slime.Cursor;
 import com.yahoo.slime.JsonFormat;
 import com.yahoo.slime.Slime;
+import io.github.pixee.security.BoundedLineReader;
 import net.jpountz.lz4.LZ4Factory;
 import net.jpountz.lz4.LZ4FastDecompressor;
 
@@ -55,7 +56,7 @@ public class VespaSummaryBenchmark {
             String strLine;
 
             List<String> docIds = new ArrayList<>();
-            while ((strLine = br.readLine()) != null) {
+            while ((strLine = BoundedLineReader.readLine(br, 5_000_000)) != null) {
                 docIds.add(strLine);
             }
             in.close();

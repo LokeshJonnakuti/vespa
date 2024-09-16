@@ -4,6 +4,7 @@ package com.yahoo.logserver.handlers.archive;
 import com.yahoo.log.InvalidLogFormatException;
 import com.yahoo.log.LogMessage;
 import com.yahoo.plugin.SystemPropertyConfig;
+import io.github.pixee.security.BoundedLineReader;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -133,9 +134,9 @@ public class ArchiverHandlerTestCase {
             assertTrue(f.exists());
 
             BufferedReader br = new BufferedReader(new FileReader(f));
-            for (String line = br.readLine();
+            for (String line = BoundedLineReader.readLine(br, 5_000_000);
                  line != null;
-                 line = br.readLine()) {
+                 line = BoundedLineReader.readLine(br, 5_000_000)) {
                 // primitive check if the messages match
                 boolean foundMatch = false;
                 for (int k = 0; k < mStrings.length; k++) {
@@ -185,9 +186,9 @@ public class ArchiverHandlerTestCase {
 
             // ensure there's the same log message in all files
             BufferedReader br = new BufferedReader(new FileReader(f));
-            for (String line = br.readLine();
+            for (String line = BoundedLineReader.readLine(br, 5_000_000);
                  line != null;
-                 line = br.readLine()) {
+                 line = BoundedLineReader.readLine(br, 5_000_000)) {
                 assertTrue(msg[1].toString().equals((line + "\n")));
                 msgCount++;
             }

@@ -14,6 +14,7 @@ import com.yahoo.search.searchchain.ExecutionFactory;
 import com.yahoo.search.searchchain.SearchChain;
 import com.yahoo.search.searchchain.SearchChainRegistry;
 import com.yahoo.search.searchchain.SearcherRegistry;
+import io.github.pixee.security.BoundedLineReader;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -340,7 +341,7 @@ public class SearchChainConfigurerTestCase {
             Pattern p = Pattern.compile("^[a-z]+" + "\\[\\d+\\]\\.id (.+)");
             BufferedReader reader = new BufferedReader(new InputStreamReader(
                                                        new FileInputStream(componentsFile), StandardCharsets.UTF_8));
-            while ((line = reader.readLine()) != null) {
+            while ((line = BoundedLineReader.readLine(reader, 5_000_000)) != null) {
                 Matcher m = p.matcher(line);
                 if (m.matches() && !m.group(1).equals(HandlersConfigurerDi.RegistriesHack.class.getName())) {
                     buf.append("components[").append(i).append("].id ").append(m.group(1)).append("\n");
@@ -352,7 +353,7 @@ public class SearchChainConfigurerTestCase {
         BufferedReader reader = new BufferedReader(new InputStreamReader(
                 new FileInputStream(configFile), StandardCharsets.UTF_8));
         Pattern component = Pattern.compile("^" + componentType + "\\[\\d+\\]\\.id (.+)");
-        while ((line = reader.readLine()) != null) {
+        while ((line = BoundedLineReader.readLine(reader, 5_000_000)) != null) {
             Matcher m = component.matcher(line);
             if (m.matches()) {
                 buf.append("components[").append(i).append("].id ").append(m.group(1)).append("\n");

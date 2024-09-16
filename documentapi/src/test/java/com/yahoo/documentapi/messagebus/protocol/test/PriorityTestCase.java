@@ -3,6 +3,7 @@ package com.yahoo.documentapi.messagebus.protocol.test;
 
 import com.yahoo.documentapi.messagebus.protocol.DocumentProtocol;
 import com.yahoo.documentapi.messagebus.protocol.DocumentProtocol.Priority;
+import io.github.pixee.security.BoundedLineReader;
 import org.junit.Test;
 
 import java.io.BufferedReader;
@@ -27,7 +28,7 @@ public class PriorityTestCase {
 
         List<Priority> expected = new LinkedList<Priority>(List.of(Priority.values()));
         String str;
-        while ((str = in.readLine()) != null) {
+        while ((str = BoundedLineReader.readLine(in, 5_000_000)) != null) {
             String arr[] = str.split(":", 2);
             Priority pri = Priority.valueOf(arr[0]);
             assertEquals(pri.toString(), pri.getValue(), Integer.valueOf(arr[1]).intValue());

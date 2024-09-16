@@ -21,6 +21,7 @@ import com.yahoo.metrics.simple.jdisc.SimpleMetricConsumer;
 import com.yahoo.search.Query;
 import com.yahoo.search.Result;
 import com.yahoo.search.handler.SearchHandler;
+import io.github.pixee.security.BoundedLineReader;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -349,7 +350,7 @@ public class ApplicationTest {
                 BufferedReader r = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
                 String line;
                 StringBuilder sb = new StringBuilder();
-                while ((line = r.readLine()) != null) {
+                while ((line = BoundedLineReader.readLine(r, 5_000_000)) != null) {
                     sb.append(line).append("\n");
                 }
                 assertTrue(sb.toString().contains("Handler"));

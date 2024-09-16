@@ -4,6 +4,7 @@ package com.yahoo.document;
 import com.yahoo.document.idstring.IdIdString;
 import com.yahoo.document.idstring.IdString;
 import com.yahoo.vespa.objects.BufferSerializer;
+import io.github.pixee.security.BoundedLineReader;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -115,7 +116,7 @@ public class DocumentIdTestCase {
         byte[] b;
 
         // reads from file
-        while ((line = fr.readLine()) != null) {
+        while ((line = BoundedLineReader.readLine(fr, 5_000_000)) != null) {
             split_line = line.split(" - ");
             DocumentId mydoc = new DocumentId(split_line[0]);
             b = mydoc.getGlobalId();
@@ -154,7 +155,7 @@ public class DocumentIdTestCase {
         BucketId bid;
 
         // reads from file
-        while ((line = fr.readLine()) != null) {
+        while ((line = BoundedLineReader.readLine(fr, 5_000_000)) != null) {
             split_line = line.split(" - ");
             DocumentId mydoc = new DocumentId(split_line[0]);
             BucketIdFactory factory = new BucketIdFactory(32, 26, 6);

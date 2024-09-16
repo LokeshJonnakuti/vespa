@@ -1,6 +1,7 @@
 // Copyright Vespa.ai. Licensed under the terms of the Apache 2.0 license. See LICENSE in the project root.
 package com.yahoo.prelude.semantics.benchmark;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -32,7 +33,7 @@ public class RuleBaseBenchmark {
         ArrayList<String> queries = new ArrayList<>();
         BufferedReader reader = new BufferedReader(new FileReader(queryFile));
         String line;
-        while((line=reader.readLine())!=null){
+        while((line=BoundedLineReader.readLine(reader, 5_000_000))!=null){
             queries.add(line);
         }
         Date start = new Date();

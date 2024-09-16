@@ -1,6 +1,7 @@
 // Copyright Vespa.ai. Licensed under the terms of the Apache 2.0 license. See LICENSE in the project root.
 package com.yahoo.config.codegen;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class NormalizedDefinition {
     public NormalizedDefinition normalize(BufferedReader reader) throws IOException {
         String s;
         List<String> input = new ArrayList<>();
-        while ((s = reader.readLine()) != null) {
+        while ((s = BoundedLineReader.readLine(reader, 5_000_000)) != null) {
             String normalized = normalize(s);
             if (normalized.length() > 0) {
                 input.add(normalized);

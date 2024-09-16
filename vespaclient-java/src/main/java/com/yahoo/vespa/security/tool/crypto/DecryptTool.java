@@ -9,6 +9,7 @@ import com.yahoo.vespa.security.tool.CliUtils;
 import com.yahoo.vespa.security.tool.Tool;
 import com.yahoo.vespa.security.tool.ToolDescription;
 import com.yahoo.vespa.security.tool.ToolInvocation;
+import io.github.pixee.security.BoundedLineReader;
 import org.apache.commons.cli.Option;
 
 import java.io.BufferedReader;
@@ -156,7 +157,7 @@ public class DecryptTool implements Tool {
         invocation.stdOut().format("Paste response and hit return: ");
 
         try (var reader = new BufferedReader(new InputStreamReader(invocation.stdIn()))) {
-            var serializedRes = reader.readLine().strip();
+            var serializedRes = BoundedLineReader.readLine(reader, 5_000_000).strip();
             if (serializedRes.isEmpty()) {
                 throw new IllegalArgumentException("Empty response; aborting");
             }
