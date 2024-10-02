@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
@@ -57,7 +58,7 @@ public class TargetingQueryFileConverter {
 
     private static void writeSubqueriesToFile(List<Query> queries, File output, OutputFormat outputFormat)
             throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(output))) {
+        try (BufferedWriter writer = Files.newBufferedWriter(output.toPath())) {
             if (outputFormat == OutputFormat.JSON) {
                 writeJSONOutput(writer, queries);
             } else {
