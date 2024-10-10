@@ -1,6 +1,8 @@
 // Copyright Vespa.ai. Licensed under the terms of the Apache 2.0 license. See LICENSE in the project root.
 package com.yahoo.vespa.config.proxy.filedistribution;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -27,7 +29,7 @@ class UrlDownloader implements Downloader {
     @Override
     public Optional<File> downloadFile(String url, File downloadDir) throws IOException {
         long start = System.currentTimeMillis();
-        HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+        HttpURLConnection connection = (HttpURLConnection) Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).openConnection();
         connection.setRequestProperty("User-Agent", USER_AGENT_MODEL_DOWNLOADER);
         if (connection.getResponseCode() != 200)
             throw new RuntimeException("Download of URL '" + url + "' failed, got response code " + connection.getResponseCode());
