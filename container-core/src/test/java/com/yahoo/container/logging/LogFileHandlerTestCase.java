@@ -65,7 +65,7 @@ public class LogFileHandlerTestCase {
 
     @Test
     void testSimpleLogging() throws IOException {
-        File logFile = File.createTempFile("testLogFileG1.txt", null, temporaryFolder);
+        File logFile = Files.createTempFile(temporaryFolder.toPath(), "testLogFileG1.txt", null).toFile();
 
         //create logfilehandler
         LogFileHandler<String> h = new LogFileHandler<>(Compression.NONE, BUFFER_SIZE, logFile.getAbsolutePath(), "0 5 ...", null, 2048, "thread-name", new StringLogWriter());
@@ -78,7 +78,7 @@ public class LogFileHandlerTestCase {
 
     @Test
     void testDeleteFileDuringLogging() throws IOException {
-        File logFile = File.createTempFile("testLogFileG2.txt", null, temporaryFolder);
+        File logFile = Files.createTempFile(temporaryFolder.toPath(), "testLogFileG2.txt", null).toFile();
 
         //create logfilehandler
         LogFileHandler<String> h = new LogFileHandler<>(Compression.NONE, BUFFER_SIZE, logFile.getAbsolutePath(), "0 5 ...", null, 2048, "thread-name", new StringLogWriter());

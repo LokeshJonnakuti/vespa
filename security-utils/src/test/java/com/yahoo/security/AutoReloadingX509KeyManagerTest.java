@@ -43,10 +43,10 @@ public class AutoReloadingX509KeyManagerTest {
     @Test
     void crypto_material_is_reloaded_when_scheduler_task_is_executed() throws IOException {
         KeyPair keyPair = KeyUtils.generateKeypair(KeyAlgorithm.EC);
-        Path privateKeyFile = File.createTempFile("junit", null, tempDirectory).toPath();
+        Path privateKeyFile = Files.createTempFile(tempDirectory.toPath(), "junit", null).toFile().toPath();
         Files.write(privateKeyFile, KeyUtils.toPem(keyPair.getPrivate()).getBytes());
 
-        Path certificateFile = File.createTempFile("junit", null, tempDirectory).toPath();
+        Path certificateFile = Files.createTempFile(tempDirectory.toPath(), "junit", null).toFile().toPath();
         BigInteger serialNumberInitialCertificate = BigInteger.ONE;
         X509Certificate initialCertificate = generateCertificate(keyPair, serialNumberInitialCertificate);
         Files.write(certificateFile, X509CertificateUtils.toPem(initialCertificate).getBytes());

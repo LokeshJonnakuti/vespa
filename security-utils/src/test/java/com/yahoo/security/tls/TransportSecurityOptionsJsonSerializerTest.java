@@ -70,7 +70,7 @@ public class TransportSecurityOptionsJsonSerializerTest {
                 .withAcceptedProtocols(List.of("TLSv1.2"))
                 .withHostnameValidationDisabled(true)
                 .build();
-        File outputFile = File.createTempFile("junit", null, tempDirectory);
+        File outputFile = Files.createTempFile(tempDirectory.toPath(), "junit", null).toFile();
         try (OutputStream out = Files.newOutputStream(outputFile.toPath())) {
             new TransportSecurityOptionsJsonSerializer().serialize(out, options);
         }
@@ -86,7 +86,7 @@ public class TransportSecurityOptionsJsonSerializerTest {
                 .withCaCertificates(Paths.get("my_cas.pem"))
                 .withHostnameValidationDisabled(false)
                 .build();
-        File outputFile = File.createTempFile("junit", null, tempDirectory);
+        File outputFile = Files.createTempFile(tempDirectory.toPath(), "junit", null).toFile();
         try (OutputStream out = Files.newOutputStream(outputFile.toPath())) {
             new TransportSecurityOptionsJsonSerializer().serialize(out, options);
         }

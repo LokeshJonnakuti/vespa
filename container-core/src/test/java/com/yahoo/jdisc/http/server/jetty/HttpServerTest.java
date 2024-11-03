@@ -30,6 +30,7 @@ import com.yahoo.jdisc.http.server.jetty.JettyTestDriver.TlsClientAuth;
 import com.yahoo.jdisc.service.BindingSetNotFoundException;
 import com.yahoo.security.SslContextBuilder;
 import com.yahoo.security.tls.TlsContext;
+import java.nio.file.Files;
 import org.apache.hc.client5.http.async.methods.SimpleHttpResponse;
 import org.apache.hc.client5.http.async.methods.SimpleRequestBuilder;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
@@ -506,8 +507,8 @@ public class HttpServerTest {
     @Disabled("Temporarily ignore until stabilized")
     void requireThatConnectionIsClosedAfterXRequests() throws Exception {
         final int MAX_REQUESTS = 10;
-        Path privateKeyFile = File.createTempFile("junit", null, tmpFolder).toPath();
-        Path certificateFile = File.createTempFile("junit", null, tmpFolder).toPath();
+        Path privateKeyFile = Files.createTempFile(tmpFolder.toPath(), "junit", null).toFile().toPath();
+        Path certificateFile = Files.createTempFile(tmpFolder.toPath(), "junit", null).toFile().toPath();
         generatePrivateKeyAndCertificate(privateKeyFile, certificateFile);
         ConnectorConfig.Builder connectorConfig = new ConnectorConfig.Builder()
                 .maxRequestsPerConnection(MAX_REQUESTS)
@@ -556,8 +557,8 @@ public class HttpServerTest {
 
     @Test
     void requireThatServerCanRespondToSslRequest() throws Exception {
-        Path privateKeyFile = File.createTempFile("junit", null, tmpFolder).toPath();
-        Path certificateFile = File.createTempFile("junit", null, tmpFolder).toPath();
+        Path privateKeyFile = Files.createTempFile(tmpFolder.toPath(), "junit", null).toFile().toPath();
+        Path certificateFile = Files.createTempFile(tmpFolder.toPath(), "junit", null).toFile().toPath();
         generatePrivateKeyAndCertificate(privateKeyFile, certificateFile);
 
         final JettyTestDriver driver = JettyTestDriver.newInstanceWithSsl(new EchoRequestHandler(), certificateFile, privateKeyFile, TlsClientAuth.WANT);
@@ -569,8 +570,8 @@ public class HttpServerTest {
 
     @Test
     void requireThatTlsClientAuthenticationEnforcerRejectsRequestsForNonWhitelistedPaths() throws IOException {
-        Path privateKeyFile = File.createTempFile("junit", null, tmpFolder).toPath();
-        Path certificateFile = File.createTempFile("junit", null, tmpFolder).toPath();
+        Path privateKeyFile = Files.createTempFile(tmpFolder.toPath(), "junit", null).toFile().toPath();
+        Path certificateFile = Files.createTempFile(tmpFolder.toPath(), "junit", null).toFile().toPath();
         generatePrivateKeyAndCertificate(privateKeyFile, certificateFile);
         JettyTestDriver driver = createSslWithTlsClientAuthenticationEnforcer(certificateFile, privateKeyFile);
 
@@ -587,8 +588,8 @@ public class HttpServerTest {
 
     @Test
     void requireThatTlsClientAuthenticationEnforcerAllowsRequestForWhitelistedPaths() throws IOException {
-        Path privateKeyFile = File.createTempFile("junit", null, tmpFolder).toPath();
-        Path certificateFile = File.createTempFile("junit", null, tmpFolder).toPath();
+        Path privateKeyFile = Files.createTempFile(tmpFolder.toPath(), "junit", null).toFile().toPath();
+        Path certificateFile = Files.createTempFile(tmpFolder.toPath(), "junit", null).toFile().toPath();
         generatePrivateKeyAndCertificate(privateKeyFile, certificateFile);
         JettyTestDriver driver = JettyTestDriver.newInstanceWithSsl(new EchoRequestHandler(), certificateFile, privateKeyFile, TlsClientAuth.WANT);
 
@@ -699,8 +700,8 @@ public class HttpServerTest {
 
     @Test
     void requireThatConnectionIsTrackedInConnectionLog() throws Exception {
-        Path privateKeyFile = File.createTempFile("junit", null, tmpFolder).toPath();
-        Path certificateFile = File.createTempFile("junit", null, tmpFolder).toPath();
+        Path privateKeyFile = Files.createTempFile(tmpFolder.toPath(), "junit", null).toFile().toPath();
+        Path certificateFile = Files.createTempFile(tmpFolder.toPath(), "junit", null).toFile().toPath();
         generatePrivateKeyAndCertificate(privateKeyFile, certificateFile);
         InMemoryConnectionLog connectionLog = new InMemoryConnectionLog();
         Module overrideModule = binder -> binder.bind(ConnectionLog.class).toInstance(connectionLog);
@@ -769,8 +770,8 @@ public class HttpServerTest {
 
     @Test
     void requireThatRequestsPerConnectionMetricIsAggregated() throws IOException {
-        Path privateKeyFile = File.createTempFile("junit", null, tmpFolder).toPath();
-        Path certificateFile = File.createTempFile("junit", null, tmpFolder).toPath();
+        Path privateKeyFile = Files.createTempFile(tmpFolder.toPath(), "junit", null).toFile().toPath();
+        Path certificateFile = Files.createTempFile(tmpFolder.toPath(), "junit", null).toFile().toPath();
         generatePrivateKeyAndCertificate(privateKeyFile, certificateFile);
         var metricConsumer = new MetricConsumerMock();
         InMemoryConnectionLog connectionLog = new InMemoryConnectionLog();
@@ -783,8 +784,8 @@ public class HttpServerTest {
 
     @Test
     void uriWithEmptyPathSegmentIsAllowed() throws Exception {
-        Path privateKeyFile = File.createTempFile("junit", null, tmpFolder).toPath();
-        Path certificateFile = File.createTempFile("junit", null, tmpFolder).toPath();
+        Path privateKeyFile = Files.createTempFile(tmpFolder.toPath(), "junit", null).toFile().toPath();
+        Path certificateFile = Files.createTempFile(tmpFolder.toPath(), "junit", null).toFile().toPath();
         generatePrivateKeyAndCertificate(privateKeyFile, certificateFile);
         MetricConsumerMock metricConsumer = new MetricConsumerMock();
         InMemoryConnectionLog connectionLog = new InMemoryConnectionLog();

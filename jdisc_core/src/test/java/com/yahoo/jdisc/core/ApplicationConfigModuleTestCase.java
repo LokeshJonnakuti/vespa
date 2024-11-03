@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -92,7 +93,7 @@ public class ApplicationConfigModuleTestCase {
         Properties props = new Properties();
         props.put("foo_key", "foo_val");
 
-        File file = File.createTempFile("config-", ".properties");
+        File file = Files.createTempFile("config-", ".properties").toFile();
         file.deleteOnExit();
         FileOutputStream out = new FileOutputStream(file);
         props.store(out, null);

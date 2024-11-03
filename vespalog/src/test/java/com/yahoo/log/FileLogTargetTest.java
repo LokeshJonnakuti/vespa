@@ -1,6 +1,7 @@
 // Copyright Vespa.ai. Licensed under the terms of the Apache 2.0 license. See LICENSE in the project root.
 package com.yahoo.log;
 
+import java.nio.file.Files;
 import org.junit.Test;
 import org.junit.After;
 
@@ -31,13 +32,13 @@ public class FileLogTargetTest {
 
     @Test
     public void requireThatFileCanOpened() throws IOException {
-        FileLogTarget logTarget = new FileLogTarget(File.createTempFile("logfile", ".log"));
+        FileLogTarget logTarget = new FileLogTarget(Files.createTempFile("logfile", ".log").toFile());
         assertNotNull(logTarget.open());
     }
 
     @Test
     public void requireThatFileIsReopened() throws IOException {
-        FileLogTarget logTarget = new FileLogTarget(File.createTempFile("logfile", ".log"));
+        FileLogTarget logTarget = new FileLogTarget(Files.createTempFile("logfile", ".log").toFile());
         OutputStream out1 = logTarget.open();
         assertNotNull(out1);
         OutputStream out2 = logTarget.open();

@@ -214,7 +214,7 @@ public final class Application implements AutoCloseable {
          * @throws IOException if the temporary directory could not be created
          */
         private static File makeTempDir(String prefix, String suffix) throws IOException {
-            File tmpDir = File.createTempFile(prefix, suffix, getTempDir());
+            File tmpDir = Files.createTempFile(getTempDir().toPath(), prefix, suffix).toFile();
             if (!tmpDir.delete()) {
                 throw new RuntimeException("Could not delete temp directory: " + tmpDir);
             }

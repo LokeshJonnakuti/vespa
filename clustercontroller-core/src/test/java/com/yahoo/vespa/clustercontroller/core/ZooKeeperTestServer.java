@@ -2,6 +2,7 @@
 package com.yahoo.vespa.clustercontroller.core;
 
 import com.yahoo.net.HostName;
+import java.nio.file.Files;
 import org.apache.zookeeper.server.NIOServerCnxnFactory;
 import org.apache.zookeeper.server.ZooKeeperServer;
 
@@ -80,9 +81,9 @@ public class ZooKeeperTestServer {
         // user can find them along with the other test reports.
         final File surefireReportsDir = new File(System.getProperty("java.io.tmpdir") + File.separator + "surefire-reports");
         if (surefireReportsDir.isDirectory()) {
-            return File.createTempFile(DIR_PREFIX, DIR_POSTFIX, surefireReportsDir);
+            return Files.createTempFile(surefireReportsDir.toPath(), DIR_PREFIX, DIR_POSTFIX).toFile();
         }
 
-        return File.createTempFile(DIR_PREFIX, DIR_POSTFIX);
+        return Files.createTempFile(DIR_PREFIX, DIR_POSTFIX).toFile();
     }
 }

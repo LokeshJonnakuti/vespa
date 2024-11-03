@@ -1,6 +1,7 @@
 // Copyright Vespa.ai. Licensed under the terms of the Apache 2.0 license. See LICENSE in the project root.
 package com.yahoo.config.subscription;
 
+import java.nio.file.Files;
 import org.junit.Test;
 
 import java.io.File;
@@ -23,7 +24,7 @@ public class ConfigURITest {
 
     @Test
     public void testFileUri() throws IOException {
-        File file = File.createTempFile("foo", ".cfg");
+        File file = Files.createTempFile("foo", ".cfg").toFile();
         ConfigURI uri = ConfigURI.createFromId("file:" + file.getAbsolutePath());
         assertTrue(uri.getConfigId().isEmpty());
         assertTrue(uri.getSource() instanceof FileSource);

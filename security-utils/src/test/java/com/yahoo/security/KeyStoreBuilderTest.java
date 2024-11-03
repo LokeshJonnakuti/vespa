@@ -1,6 +1,7 @@
 // Copyright Vespa.ai. Licensed under the terms of the Apache 2.0 license. See LICENSE in the project root.
 package com.yahoo.security;
 
+import java.nio.file.Files;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -34,7 +35,7 @@ public class KeyStoreBuilderTest {
 
     @Test
     void can_build_jks_keystore_from_file() throws Exception {
-        Path keystoreFile = File.createTempFile("junit", null, tempDirectory).toPath();
+        Path keystoreFile = Files.createTempFile(tempDirectory.toPath(), "junit", null).toFile().toPath();
         createKeystoreFile(keystoreFile, KeyStoreType.JKS, PASSWORD);
 
         KeyStoreBuilder.withType(KeyStoreType.JKS)
@@ -44,7 +45,7 @@ public class KeyStoreBuilderTest {
 
     @Test
     void can_build_pcks12_keystore_from_file() throws Exception {
-        Path keystoreFile = File.createTempFile("junit", null, tempDirectory).toPath();
+        Path keystoreFile = Files.createTempFile(tempDirectory.toPath(), "junit", null).toFile().toPath();
         createKeystoreFile(keystoreFile, KeyStoreType.PKCS12, PASSWORD);
 
         KeyStoreBuilder.withType(KeyStoreType.PKCS12)

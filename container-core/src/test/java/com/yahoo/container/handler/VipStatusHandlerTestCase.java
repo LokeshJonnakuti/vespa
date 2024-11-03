@@ -15,6 +15,7 @@ import com.yahoo.jdisc.handler.ResponseHandler;
 import com.yahoo.jdisc.http.HttpRequest;
 import com.yahoo.jdisc.service.CurrentContainer;
 import com.yahoo.text.Utf8;
+import java.nio.file.Files;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -96,7 +97,7 @@ public class VipStatusHandlerTestCase {
 
     @Test
     void testFileFound() throws IOException {
-        File statusFile = File.createTempFile("VipStatusHandlerTestCase", null);
+        File statusFile = Files.createTempFile("VipStatusHandlerTestCase", null).toFile();
         try {
             FileWriter writer = new FileWriter(statusFile);
             String OK = "OK\n";

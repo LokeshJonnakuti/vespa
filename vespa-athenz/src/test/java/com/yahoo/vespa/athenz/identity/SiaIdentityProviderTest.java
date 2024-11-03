@@ -33,15 +33,15 @@ public class SiaIdentityProviderTest {
 
     @Test
     void constructs_ssl_context_from_file() throws IOException {
-        File keyFile = File.createTempFile("junit", null, tempDirectory);
+        File keyFile = Files.createTempFile(tempDirectory.toPath(), "junit", null).toFile();
         KeyPair keypair = KeyUtils.generateKeypair(KeyAlgorithm.RSA);
         createPrivateKeyFile(keyFile, keypair);
 
         X509Certificate certificate = createCertificate(keypair);
-        File certificateFile = File.createTempFile("junit", null, tempDirectory);
+        File certificateFile = Files.createTempFile(tempDirectory.toPath(), "junit", null).toFile();
         createCertificateFile(certificate, certificateFile);
 
-        File trustStoreFile = File.createTempFile("junit", null, tempDirectory);
+        File trustStoreFile = Files.createTempFile(tempDirectory.toPath(), "junit", null).toFile();
         createTrustStoreFile(certificate, trustStoreFile);
 
         SiaIdentityProvider provider =
@@ -56,15 +56,15 @@ public class SiaIdentityProviderTest {
 
     @Test
     void constructs_ssl_context_with_pem_trust_store() throws IOException {
-        File keyFile = File.createTempFile("junit", null, tempDirectory);
+        File keyFile = Files.createTempFile(tempDirectory.toPath(), "junit", null).toFile();
         KeyPair keypair = KeyUtils.generateKeypair(KeyAlgorithm.RSA);
         createPrivateKeyFile(keyFile, keypair);
 
         X509Certificate certificate = createCertificate(keypair);
-        File certificateFile = File.createTempFile("junit", null, tempDirectory);
+        File certificateFile = Files.createTempFile(tempDirectory.toPath(), "junit", null).toFile();
         createCertificateFile(certificate, certificateFile);
 
-        File trustStoreFile = File.createTempFile("junit", null, tempDirectory);
+        File trustStoreFile = Files.createTempFile(tempDirectory.toPath(), "junit", null).toFile();
         createPemTrustStoreFile(certificate, trustStoreFile);
 
         SiaIdentityProvider provider =

@@ -35,17 +35,17 @@ public class ConfigFileBasedTlsContextTest {
     @Test
     void can_create_sslcontext_from_credentials() throws IOException, InterruptedException {
         KeyPair keyPair = KeyUtils.generateKeypair(EC);
-        Path privateKeyFile = File.createTempFile("junit", null, tempDirectory).toPath();
+        Path privateKeyFile = Files.createTempFile(tempDirectory.toPath(), "junit", null).toFile().toPath();
         Files.write(privateKeyFile, KeyUtils.toPem(keyPair.getPrivate()).getBytes());
 
         X509Certificate certificate = X509CertificateBuilder
                 .fromKeypair(keyPair, new X500Principal("CN=dummy"), EPOCH, EPOCH.plus(1, DAYS), SHA256_WITH_ECDSA, BigInteger.ONE)
                 .build();
-        Path certificateChainFile = File.createTempFile("junit", null, tempDirectory).toPath();
+        Path certificateChainFile = Files.createTempFile(tempDirectory.toPath(), "junit", null).toFile().toPath();
         String certificatePem = X509CertificateUtils.toPem(certificate);
         Files.write(certificateChainFile, certificatePem.getBytes());
 
-        Path caCertificatesFile = File.createTempFile("junit", null, tempDirectory).toPath();
+        Path caCertificatesFile = Files.createTempFile(tempDirectory.toPath(), "junit", null).toFile().toPath();
         Files.write(caCertificatesFile, certificatePem.getBytes());
 
         TransportSecurityOptions options = new TransportSecurityOptions.Builder()
@@ -53,7 +53,7 @@ public class ConfigFileBasedTlsContextTest {
                 .withCaCertificates(caCertificatesFile)
                 .build();
 
-        Path optionsFile = File.createTempFile("junit", null, tempDirectory).toPath();
+        Path optionsFile = Files.createTempFile(tempDirectory.toPath(), "junit", null).toFile().toPath();
         options.toJsonFile(optionsFile);
 
         try (TlsContext tlsContext = new ConfigFileBasedTlsContext(optionsFile, AuthorizationMode.ENFORCE)) {

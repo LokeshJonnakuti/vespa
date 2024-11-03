@@ -15,6 +15,7 @@ import com.yahoo.security.SignatureAlgorithm;
 import com.yahoo.security.X509CertificateBuilder;
 import com.yahoo.security.X509CertificateWithKey;
 import com.yahoo.test.ManualClock;
+import java.nio.file.Files;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -71,7 +72,7 @@ public class AthenzIdentityProviderImplTest {
                         SignatureAlgorithm.SHA256_WITH_ECDSA,
                         BigInteger.ONE)
                 .build();
-        trustStoreFile = File.createTempFile("junit", null, tempDir).toPath();
+        trustStoreFile = Files.createTempFile(tempDir.toPath(), "junit", null).toFile().toPath();
         KeyStoreUtils.writeKeyStoreToFile(
                 KeyStoreBuilder.withType(KeyStoreType.JKS)
                         .withKeyEntry("default", caKeypair.getPrivate(), caCertificate)

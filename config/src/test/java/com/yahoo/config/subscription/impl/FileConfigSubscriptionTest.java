@@ -29,7 +29,7 @@ public class FileConfigSubscriptionTest {
 
     @Before
     public void setUp() throws IOException {
-       TEST_TYPES_FILE = File.createTempFile("fooconfig", ".cfg");
+       TEST_TYPES_FILE = Files.createTempFile("fooconfig", ".cfg").toFile();
     }
 
     private void writeConfig(String field, String value) throws IOException {
