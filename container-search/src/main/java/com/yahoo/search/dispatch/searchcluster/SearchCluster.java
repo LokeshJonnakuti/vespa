@@ -172,7 +172,9 @@ public class SearchCluster implements NodeManager<Node> {
             // Do not take this out of rotation if we're a combined cluster of size 1,
             // as that can't be helpful, and leads to a deadlock where this node is never set back in service
             if (nodeIsWorking || groups().stream().map(Group::nodes).count() > 1)
-                setInRotationOnlyIf(nodeIsWorking);
+                {
+                    setInRotationOnlyIf(nodeIsWorking);
+                }
         }
     }
 

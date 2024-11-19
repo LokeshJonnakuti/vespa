@@ -47,7 +47,9 @@ abstract public class Renderer extends com.yahoo.processing.rendering.Renderer<R
         }
         finally {
             if (writer != null)
-                try { writer.close(); } catch (IOException e2) {};
+                {
+                    try { writer.close(); } catch (IOException e2) {}
+                };
         }
         CompletableFuture<Boolean> completed = new CompletableFuture<>();
         completed.complete(true);
