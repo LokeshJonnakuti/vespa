@@ -2,6 +2,7 @@
 package com.yahoo.vdslib;
 
 import com.yahoo.document.BucketId;
+import java.security.SecureRandom;
 import org.junit.Test;
 
 import java.util.Random;
@@ -97,7 +98,7 @@ public class BucketDistributionTestCase {
 
     @Test
     public void testNumBucketBits() {
-        Random rnd = new Random();
+        Random rnd = new SecureRandom();
 
         BucketDistribution bd = new BucketDistribution(1, 4);
         for (int i = 0; i <= 0xf; ++i) {

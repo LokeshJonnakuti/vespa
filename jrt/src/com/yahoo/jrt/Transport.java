@@ -3,6 +3,7 @@ package com.yahoo.jrt;
 
 
 import java.nio.channels.SocketChannel;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -32,7 +33,7 @@ public class Transport {
 
     private final TransportMetrics metrics = TransportMetrics.getInstance();
     private final List<TransportThread> threads = new ArrayList<>();
-    private final Random rnd = new Random();
+    private final Random rnd = new SecureRandom();
 
     /**
      * Creates a new Transport object with the given fatal error

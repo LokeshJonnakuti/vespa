@@ -16,6 +16,7 @@ import com.yahoo.jdisc.http.HttpRequest;
 
 import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -63,7 +64,7 @@ public class AccessLoggingRequestHandler extends AbstractRequestHandler implemen
     private final List<String> pathPrefixes;
     private final List<Double> samplingRate;
     private final List<Long> maxSize;
-    private final Random rng = new Random();
+    private final Random rng = new SecureRandom();
 
     public AccessLoggingRequestHandler(
             org.eclipse.jetty.server.Request jettyRequest,

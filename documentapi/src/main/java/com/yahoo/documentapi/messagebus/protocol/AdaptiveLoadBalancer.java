@@ -2,6 +2,7 @@
 package com.yahoo.documentapi.messagebus.protocol;
 
 import com.yahoo.jrt.slobrok.api.Mirror;
+import java.security.SecureRandom;
 
 import java.util.List;
 import java.util.Random;
@@ -14,7 +15,7 @@ import java.util.Random;
 class AdaptiveLoadBalancer extends LoadBalancer {
     private final Random random;
     AdaptiveLoadBalancer(String cluster) {
-        this(cluster, new Random());
+        this(cluster, new SecureRandom());
     }
     AdaptiveLoadBalancer(String cluster, Random random) {
         super(cluster);

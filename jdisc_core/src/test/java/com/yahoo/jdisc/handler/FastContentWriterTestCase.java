@@ -1,6 +1,7 @@
 // Copyright Vespa.ai. Licensed under the terms of the Apache 2.0 license. See LICENSE in the project root.
 package com.yahoo.jdisc.handler;
 
+import java.security.SecureRandom;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -223,7 +224,7 @@ public class FastContentWriterTestCase {
             public Integer call() throws Exception {
                 FastContentWriter out = new FastContentWriter(content);
                 ByteBuffer buf = ByteBuffer.wrap(new byte[69]);
-                int bufCnt = 4096 + new Random().nextInt(4096);
+                int bufCnt = 4096 + new SecureRandom().nextInt(4096);
 
                 latch.countDown();
                 latch.await(600, TimeUnit.SECONDS);

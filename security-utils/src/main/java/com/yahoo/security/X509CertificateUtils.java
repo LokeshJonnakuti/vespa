@@ -1,6 +1,7 @@
 // Copyright Vespa.ai. Licensed under the terms of the Apache 2.0 license. See LICENSE in the project root.
 package com.yahoo.security;
 
+import java.security.SecureRandom;
 import org.bouncycastle.asn1.ASN1Encodable;
 import org.bouncycastle.asn1.ASN1OctetString;
 import org.bouncycastle.asn1.ASN1Primitive;
@@ -163,7 +164,7 @@ public class X509CertificateUtils {
 
     public static boolean privateKeyMatchesPublicKey(PrivateKey privateKey, PublicKey publicKey) {
         byte[] someRandomData = new byte[64];
-        new Random().nextBytes(someRandomData);
+        new SecureRandom().nextBytes(someRandomData);
 
         Signature signer = SignatureUtils.createSigner(privateKey);
         Signature verifier = SignatureUtils.createVerifier(publicKey);

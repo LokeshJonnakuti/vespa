@@ -36,6 +36,7 @@ import com.yahoo.vespa.hosted.provision.node.IP;
 import com.yahoo.vespa.service.duper.ConfigServerApplication;
 import com.yahoo.vespa.service.duper.ConfigServerHostApplication;
 import com.yahoo.vespa.service.duper.InfraApplication;
+import java.security.SecureRandom;
 import org.junit.Test;
 
 import java.time.Duration;
@@ -868,7 +869,7 @@ public class ProvisioningTest {
 
         // Pick out a random application node and make its parent larger, this will make it the spare host
         NodeList nodes = tester.nodeRepository().nodes().list();
-        Node randomNode = nodes.owner(application).shuffle(new Random()).first().get();
+        Node randomNode = nodes.owner(application).shuffle(new SecureRandom()).first().get();
         tester.nodeRepository().nodes().write(nodes.parentOf(randomNode).get()
                 .with(new Flavor(new NodeResources(2, 10, 20, 8)), Agent.system, tester.nodeRepository().clock().instant()), () -> {});
 
@@ -915,7 +916,7 @@ public class ProvisioningTest {
         assertEquals(10, list.state(Node.State.active).nodeType(NodeType.host).size());
 
         // Pick out 5 random nodes and retire those
-        Set<String> retiredHostnames = list.shuffle(new Random()).first(5).hostnames();
+        Set<String> retiredHostnames = list.shuffle(new SecureRandom()).first(5).hostnames();
         tester.patchNodes(node -> retiredHostnames.contains(node.hostname()), node -> node.withWantToRetire(true, Agent.system, tester.clock().instant()));
         tester.activateTenantHosts();
 

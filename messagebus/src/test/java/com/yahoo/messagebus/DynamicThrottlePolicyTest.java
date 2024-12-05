@@ -4,6 +4,7 @@ package com.yahoo.messagebus;
 import com.yahoo.concurrent.ManualTimer;
 import com.yahoo.messagebus.test.SimpleMessage;
 import com.yahoo.messagebus.test.SimpleReply;
+import java.security.SecureRandom;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayDeque;
@@ -300,7 +301,7 @@ public class DynamicThrottlePolicyTest {
      */
     static class MockServer {
 
-        final Random random = new Random();
+        final Random random = new SecureRandom();
         final int workPerSuccess;
         final int numberOfWorkers;
         final int maximumTaskPerWorker;

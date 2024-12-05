@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Set;
@@ -133,7 +134,7 @@ public class JavaClassBuilder implements ClassBuilder {
      */
     static String createUniqueSymbol(CNode node, String basis) {
         Set<String> usedSymbols = Arrays.stream(node.getChildren()).map(CNode::getName).collect(Collectors.toSet());
-        Random rng = new Random();
+        Random rng = new SecureRandom();
 
         for (int i = 1;; i++) {
             String candidate = (i < basis.length()) ? basis.substring(0, i)

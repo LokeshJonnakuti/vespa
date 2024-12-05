@@ -22,6 +22,7 @@ import com.yahoo.language.simple.SimpleLinguistics;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.LinkedHashSet;
 import java.util.Random;
 import java.util.Set;
@@ -40,7 +41,7 @@ import java.util.concurrent.Executors;
 public class HandlersConfigurerTestWrapper {
 
     private final ConfigSourceSet configSources =
-            new ConfigSourceSet(this.getClass().getSimpleName() + ": " + new Random().nextLong());
+            new ConfigSourceSet(this.getClass().getSimpleName() + ": " + new SecureRandom().nextLong());
     private final HandlersConfigurerDi configurer;
 
     // TODO: Remove once tests use ConfigSet rather than dir:
