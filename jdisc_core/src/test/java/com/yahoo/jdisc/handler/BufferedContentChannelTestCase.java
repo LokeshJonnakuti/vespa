@@ -1,6 +1,7 @@
 // Copyright Vespa.ai. Licensed under the terms of the Apache 2.0 license. See LICENSE in the project root.
 package com.yahoo.jdisc.handler;
 
+import java.security.SecureRandom;
 import org.junit.jupiter.api.Test;
 
 import java.nio.ByteBuffer;
@@ -171,7 +172,7 @@ public class BufferedContentChannelTestCase {
 
     private static class WriteTask implements Callable<Boolean> {
 
-        final Random rnd = new Random();
+        final Random rnd = new SecureRandom();
         final BufferedContentChannel content;
         final ByteBuffer buf;
 

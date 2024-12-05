@@ -2,6 +2,7 @@
 package com.yahoo.search.dispatch;
 
 import com.yahoo.search.dispatch.searchcluster.Group;
+import java.security.SecureRandom;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -46,9 +47,9 @@ public class LoadBalancer {
 
         this.scheduler = switch (policy) {
             case ROUNDROBIN: yield new RoundRobinScheduler(scoreboard);
-            case BEST_OF_RANDOM_2: yield new BestOfRandom2(new Random(), scoreboard);
-            case LATENCY_AMORTIZED_OVER_REQUESTS: yield new AdaptiveScheduler(AdaptiveScheduler.Type.REQUESTS, new Random(), scoreboard);
-            case LATENCY_AMORTIZED_OVER_TIME: yield new AdaptiveScheduler(AdaptiveScheduler.Type.TIME, new Random(), scoreboard);
+            case BEST_OF_RANDOM_2: yield new BestOfRandom2(new SecureRandom(), scoreboard);
+            case LATENCY_AMORTIZED_OVER_REQUESTS: yield new AdaptiveScheduler(AdaptiveScheduler.Type.REQUESTS, new SecureRandom(), scoreboard);
+            case LATENCY_AMORTIZED_OVER_TIME: yield new AdaptiveScheduler(AdaptiveScheduler.Type.TIME, new SecureRandom(), scoreboard);
         };
     }
 

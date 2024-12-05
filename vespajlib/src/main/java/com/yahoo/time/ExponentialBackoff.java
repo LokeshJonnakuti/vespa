@@ -1,6 +1,7 @@
 // Copyright Vespa.ai. Licensed under the terms of the Apache 2.0 license. See LICENSE in the project root.
 package com.yahoo.time;
 
+import java.security.SecureRandom;
 import java.time.Duration;
 import java.util.Random;
 
@@ -18,7 +19,7 @@ public class ExponentialBackoff {
     private final Random random;
 
     public ExponentialBackoff(Duration initialDelay, Duration maxDelay) {
-        this(initialDelay, maxDelay, new Random());
+        this(initialDelay, maxDelay, new SecureRandom());
     }
 
     ExponentialBackoff(Duration initialDelay, Duration maxDelay, Random random) {

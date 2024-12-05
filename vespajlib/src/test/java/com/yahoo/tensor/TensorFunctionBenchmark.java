@@ -8,6 +8,7 @@ import com.yahoo.tensor.functions.ConstantTensor;
 import com.yahoo.tensor.functions.Join;
 import com.yahoo.tensor.functions.Reduce;
 import com.yahoo.tensor.functions.TensorFunction;
+import java.security.SecureRandom;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.Random;
  */
 public class TensorFunctionBenchmark {
 
-    private final static Random random = new Random();
+    private final static Random random = new SecureRandom();
 
     public double benchmark(int iterations, List<Tensor> modelVectors, TensorType.Dimension.Type dimensionType,
                             boolean extraSpace) {

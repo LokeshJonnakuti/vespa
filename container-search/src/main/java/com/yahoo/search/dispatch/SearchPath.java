@@ -5,6 +5,7 @@ import com.yahoo.collections.Pair;
 import com.yahoo.search.dispatch.searchcluster.Group;
 import com.yahoo.search.dispatch.searchcluster.SearchGroups;
 import com.yahoo.search.dispatch.searchcluster.Node;
+import java.security.SecureRandom;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,7 +33,7 @@ public class SearchPath {
 
     private final List<Selection> nodes;
     private final List<Selection> groups;
-    private static final Random random = new Random();
+    private static final Random random = new SecureRandom();
 
     private SearchPath(List<Selection> nodes, List<Selection> groups) {
         this.nodes = nodes;

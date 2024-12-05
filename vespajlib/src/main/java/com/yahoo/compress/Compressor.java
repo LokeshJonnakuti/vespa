@@ -1,6 +1,7 @@
 // Copyright Vespa.ai. Licensed under the terms of the Apache 2.0 license. See LICENSE in the project root.
 package com.yahoo.compress;
 
+import java.security.SecureRandom;
 import net.jpountz.lz4.LZ4Compressor;
 import net.jpountz.lz4.LZ4Factory;
 import net.jpountz.lz4.LZ4FastDecompressor;
@@ -194,7 +195,7 @@ public class Compressor {
 
     public long warmup(double seconds) {
         byte [] input = new byte[0x4000];
-        new Random().nextBytes(input);
+        new SecureRandom().nextBytes(input);
         long startTime = System.nanoTime();
         long compressedBytes = 0;
         byte [] decompressed = new byte [input.length];

@@ -13,6 +13,7 @@ import com.yahoo.jdisc.handler.ResponseDispatch;
 import com.yahoo.jdisc.handler.ResponseHandler;
 import com.yahoo.jdisc.service.CurrentContainer;
 import com.yahoo.jdisc.test.TestDriver;
+import java.security.SecureRandom;
 import org.junit.jupiter.api.Test;
 
 import java.net.URI;
@@ -154,7 +155,7 @@ public class ThroughputTestCase {
         }
 
         long nextLong() {
-            Random rnd = new Random();
+            Random rnd = new SecureRandom();
             int k = 0;
             for (int i = 0; i < numLoops; ++i) {
                 k += rnd.nextInt();

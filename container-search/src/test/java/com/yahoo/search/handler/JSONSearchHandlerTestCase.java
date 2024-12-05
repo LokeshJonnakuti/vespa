@@ -17,6 +17,7 @@ import com.yahoo.search.searchchain.config.test.SearchChainConfigurerTestCase;
 import com.yahoo.slime.Inspector;
 import com.yahoo.slime.SlimeUtils;
 import com.yahoo.test.json.JsonTestHelper;
+import java.security.SecureRandom;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -545,7 +546,7 @@ public class JSONSearchHandlerTestCase {
     }
 
     private static String createBenchmarkRequest(int num) {
-        Random rand = new Random();
+        Random rand = new SecureRandom();
         StringBuilder sb = new StringBuilder("{\"yql\": \"select id from vectors where {targetHits:10, approximate:true}nearestNeighbor(vector,q);\", \"input.query(q)\":[");
         sb.append(rand.nextDouble());
         for (int i=1; i < num; i++) {

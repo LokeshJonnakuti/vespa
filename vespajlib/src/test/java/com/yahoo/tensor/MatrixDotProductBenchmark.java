@@ -8,6 +8,7 @@ import com.yahoo.tensor.functions.ConstantTensor;
 import com.yahoo.tensor.functions.Join;
 import com.yahoo.tensor.functions.Reduce;
 import com.yahoo.tensor.functions.TensorFunction;
+import java.security.SecureRandom;
 
 import java.util.List;
 import java.util.Random;
@@ -19,7 +20,7 @@ import java.util.Random;
  */
 public class MatrixDotProductBenchmark {
 
-    private final static Random random = new Random();
+    private final static Random random = new SecureRandom();
 
     public double benchmark(int iterations, List<Tensor> modelMatrixes, TensorType.Dimension.Type dimensionType) {
         Tensor queryMatrix = matrix(1, 20, dimensionType).get(0);

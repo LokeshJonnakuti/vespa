@@ -1,6 +1,7 @@
 // Copyright Vespa.ai. Licensed under the terms of the Apache 2.0 license. See LICENSE in the project root.
 package com.yahoo.tensor.functions;
 
+import java.security.SecureRandom;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -62,7 +63,7 @@ public class ScalarFunctions {
     public static DoubleUnaryOperator selu() { return new Selu(); }
     public static DoubleUnaryOperator selu(double scale, double alpha) { return new Selu(scale, alpha); }
 
-    public static Function<List<Long>, Double> random() { return new Random(); }
+    public static Function<List<Long>, Double> random() { return new SecureRandom(); }
     public static Function<List<Long>, Double> equal(List<String> argumentNames) { return new EqualElements(argumentNames); }
     public static Function<List<Long>, Double> sum(List<String> argumentNames) { return new SumElements(argumentNames); }
     public static Function<List<Long>, Double> constant(double value) { return new Constant(value); }

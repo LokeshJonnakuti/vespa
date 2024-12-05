@@ -10,6 +10,7 @@ import com.yahoo.jdisc.handler.ContentChannel;
 import com.yahoo.jdisc.handler.ResponseHandler;
 import com.yahoo.jdisc.service.CurrentContainer;
 import com.yahoo.jdisc.test.TestDriver;
+import java.security.SecureRandom;
 import org.junit.jupiter.api.Test;
 
 import java.net.URI;
@@ -52,7 +53,7 @@ public class LatencyTestCase {
                                               MyRequestHandler... requestHandlers)
     {
         TimeTrack track = new TimeTrack();
-        Random rnd = new Random();
+        Random rnd = new SecureRandom();
         for (int i = 0; i < numRequests; ++i) {
             track.add(measureLatency(container, requestHandlers[rnd.nextInt(requestHandlers.length)]));
         }

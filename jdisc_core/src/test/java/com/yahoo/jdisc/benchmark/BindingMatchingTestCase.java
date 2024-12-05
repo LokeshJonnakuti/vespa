@@ -4,6 +4,7 @@ package com.yahoo.jdisc.benchmark;
 import com.yahoo.jdisc.application.BindingRepository;
 import com.yahoo.jdisc.application.BindingSet;
 import com.yahoo.jdisc.application.UriPattern;
+import java.security.SecureRandom;
 import org.junit.jupiter.api.Test;
 
 import java.net.URI;
@@ -28,7 +29,7 @@ public class BindingMatchingTestCase {
     private static final int NUM_MATCHES = 100;
     private static final int MIN_THREADS = 1;
     private static final int MAX_THREADS = 64;
-    private static final Random random = new Random();
+    private static final Random random = new SecureRandom();
     private static final ExecutorService executor = Executors.newFixedThreadPool(MAX_THREADS);
 
     @Test
